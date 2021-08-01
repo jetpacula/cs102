@@ -37,12 +37,18 @@ def group(values: tp.List[T], n: int) -> tp.List[tp.List[T]]:
     """
     Сгруппировать значения values в список, состоящий из списков по n элементов
 
+    
+
     >>> group([1,2,3,4], 2)
     [[1, 2], [3, 4]]
     >>> group([1,2,3,4,5,6,7,8,9], 3)
     [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
     """
-    pass
+
+    res =[[i for i in values[start:start+n]] for start in range(len(values)) if start % n ==0]
+
+    return res
+
 
 
 def get_row(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -> tp.List[str]:
