@@ -79,6 +79,7 @@ class GameOfLife:
         out : Grid
             Матрица клеток размером `cell_height` х `cell_width`.
         """
+        print('fixed commit')
         pass
 
     def draw_grid(self) -> None:
