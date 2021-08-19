@@ -79,7 +79,11 @@ class GameOfLife:
         out : Grid
             Матрица клеток размером `cell_height` х `cell_width`.
         """
-        print('fixed commit')
+        if randomize:
+            return [ [random.randint(0,1) for _ in range(self.width)] for _ in range (self.height)]
+        else:
+            return [ [0 for _ in range(self.width)] for _ in range (self.height)]
+
         pass
 
     def draw_grid(self) -> None:
