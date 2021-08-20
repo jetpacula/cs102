@@ -1,6 +1,7 @@
 import random
 import typing as tp
 
+import copy
 import pygame
 from pygame.locals import *
 
@@ -45,6 +46,7 @@ class GameOfLife:
 
         # Создание списка клеток
         # PUT YOUR CODE HERE
+        self.grid = self.create_grid(True)
 
         running = True
         while running:
@@ -52,10 +54,12 @@ class GameOfLife:
                 if event.type == QUIT:
                     running = False
             self.draw_lines()
+            self.draw_grid()
 
             # Отрисовка списка клеток
             # Выполнение одного шага игры (обновление состояния ячеек)
             # PUT YOUR CODE HERE
+
 
             pygame.display.flip()
             clock.tick(self.speed)
@@ -84,15 +88,18 @@ class GameOfLife:
         else:
             return [ [0 for _ in range(self.width)] for _ in range (self.height)]
 
-        pass
-
     def draw_grid(self) -> None:
         """
         Отрисовка списка клеток с закрашиванием их в соответствующе цвета.
         """
-        pass
+        colors = {0:pygame.Color('white'),
+                1:pygame.Color('green')}
+        for y in range(self.height):
+            for x in range(self.width):
+                pygame.draw.rect(self.screen,colors[self.grid[y][x]],(x*self.cell_size+1,x*self.cell_size+1,self.cell_size-1,self.cell_size-1))
 
     def get_neighbours(self, cell: Cell) -> Cells:
+
         """
         Вернуть список соседних клеток для клетки `cell`.
 
@@ -110,7 +117,15 @@ class GameOfLife:
         out : Cells
             Список соседних клеток.
         """
-        pass
+        x,y = cell
+        res = []
+
+        for ydelta in range(-1,2):
+            for xdelta in range(-1,2):
+                if (ydelta and xdelta) and  (x+xdelta in range(self.width) and (y+ydelta in range(self.height)):
+                    res.append(self.grid[y+ydelta][x+xdelta])
+        return res
+
 
     def get_next_generation(self) -> Grid:
         """
@@ -121,4 +136,7 @@ class GameOfLife:
         out : Grid
             Новое поколение клеток.
         """
-        pass
+        new_grid = self.grid()
+
+
+
