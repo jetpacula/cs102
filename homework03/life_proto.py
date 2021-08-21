@@ -1,6 +1,7 @@
 import copy
 import random
 import typing as tp
+import copy
 
 import ipdb
 import pygame
@@ -50,20 +51,21 @@ class GameOfLife:
         self.screen.fill(pygame.Color("white"))
 
         # Создание списка клеток
-        # PUT YOUR CODE HERE
+
         self.grid = self.create_grid(True)
 
         running = True
         while running:
             for event in pygame.event.get():
-                if event.type == QUIT:
+                if event.type == pygame.QUIT:
                     running = False
             self.draw_lines()
             self.draw_grid()
 
             # Отрисовка списка клеток
+            self.draw_grid()
             # Выполнение одного шага игры (обновление состояния ячеек)
-            # PUT YOUR CODE HERE
+            self.grid = self.get_next_generation()
 
             self.grid = self.get_next_generation()
 
@@ -74,21 +76,19 @@ class GameOfLife:
     def create_grid(self, randomize: bool = False) -> Grid:
         """
         Создание списка клеток.
-
         Клетка считается живой, если ее значение равно 1, в противном случае клетка
         считается мертвой, то есть, ее значение равно 0.
-
         Parameters
         ----------
         randomize : bool
             Если значение истина, то создается матрица, где каждая клетка может
             быть равновероятно живой или мертвой, иначе все клетки создаются мертвыми.
-
         Returns
         ----------
         out : Grid
             Матрица клеток размером `cell_height` х `cell_width`.
         """
+
         if randomize:
             return [
                 [random.randint(0, 1) for j in range(self.width)]
@@ -97,10 +97,12 @@ class GameOfLife:
         else:
             return [[0 for j in range(self.width)] for i in range(self.height)]
 
+
     def draw_grid(self) -> None:
         """
         Отрисовка списка клеток с закрашиванием их в соответствующе цвета.
         """
+
         colors = {0: pygame.Color("white"), 1: pygame.Color("green")}
         for y in range(self.height):
             for x in range(self.width):
@@ -113,22 +115,20 @@ class GameOfLife:
                         self.cell_size - 1,
                         self.cell_size - 1,
                     ),
+
                 )
 
     def get_neighbours(self, cell: Cell) -> Cells:
 
         """
         Вернуть список соседних клеток для клетки `cell`.
-
         Соседними считаются клетки по горизонтали, вертикали и диагоналям,
         то есть, во всех направлениях.
-
         Parameters
         ----------
         cell : Cell
             Клетка, для которой необходимо получить список соседей. Клетка
             представлена кортежем, содержащим ее координаты на игровом поле.
-
         Returns
         ----------
         out : Cells
@@ -159,12 +159,12 @@ class GameOfLife:
     def get_next_generation(self) -> Grid:
         """
         Получить следующее поколение клеток.
-
         Returns
         ----------
         out : Grid
             Новое поколение клеток.
         """
+
         new_grid = self.create_grid()
         for y, yval in enumerate(self.grid):
             new_line = []
@@ -179,6 +179,4 @@ class GameOfLife:
         return new_grid
 
 
-if __name__ == "__main__":
-    game = GameOfLife(320, 240, 20)
-    game.run()
+
